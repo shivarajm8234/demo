@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complex HTML Challenge</title>
+    <style>
+        /* Complex CSS styles can be added here */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            line-height: 200px;
+            font-size: 24px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">Challenge Completed!</div>
+    </div>
+    <script>
+        // Complex JavaScript functionality can be added here
+        document.querySelector('.box').addEventListener('click', function() {
+            alert('Congratulations! You have completed the challenge!');
+        });
+    </script>
+</body>
+</html>
