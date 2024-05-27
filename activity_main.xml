@@ -50,8 +50,8 @@
         <Button android:text="3" android:id="@+id/btn3" style="@style/CalcButton"/>
         <Button android:text="+" android:id="@+id/btnAdd" style="@style/CalcButton"/>
 
-        <Button android:text="0" android:id="@+id/btn0" style="@style/CalcButton"/>
+        <Button android:text="0" android:id="@+id/btn0" style="@style/CalcButton" android:layout_columnSpan="2"/>
         <Button android:text="." android:id="@+id/btnDot" style="@style/CalcButton"/>
-        <Button android:text="=" android:id="@+id/btnEquals" style="@style/CalcButton"/>
+        <Button android:text="ENTER" android:id="@+id/btnEnter" style="@style/EnterButton"/>
     </GridLayout>
 </LinearLayout>
