@@ -1,0 +1,85 @@
+package com.example.dynamiccalculator;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText inputField;
+    private String input = "";
+    private double value1 = Double.NaN;
+    private double value2;
+    private char ACTION;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        inputField = findViewById(R.id.inputField);
+
+        setButtonListeners();
+    }
+
+    private void setButtonListeners() {
+        int[] numericButtons = {
+                R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3,
+                R.id.btn4, R.id.btn5, R.id.btn6, R.id.btn7,
+                R.id.btn8, R.id.btn9
+        };
+
+        int[] operatorButtons = {
+                R.id.btnAdd, R.id.btnSubtract, R.id.btnMultiply, R.id.btnDivide, R.id.btnEquals, R.id.btnDot
+        };
+
+        View.OnClickListener numberListener = v -> {
+            Button button = (Button) v;
+            input += button.getText().toString();
+            inputField.setText(input);
+        };
+
+        for (int id : numericButtons) {
+            findViewById(id).setOnClickListener(numberListener);
+        }
+
+        View.OnClickListener operatorListener = v -> {
+            Button button = (Button) v;
+            char operator = button.getText().toString().charAt(0);
+            handleOperator(operator);
+        };
+
+        for (int id : operatorButtons) {
+            findViewById(id).setOnClickListener(operatorListener);
+        }
+    }
+
+    private void handleOperator(char operator) {
+        if (!Double.isNaN(value1)) {
+            value2 = Double.parseDouble(input);
+            switch (ACTION) {
+                case '+':
+                    value1 = value1 + value2;
+                    break;
+                case '-':
+                    value1 = value1 - value2;
+                    break;
+                case '*':
+                    value1 = value1 * value2;
+                    break;
+                case '/':
+                    value1 = value1 / value2;
+                    break;
+                case '=':
+                    break;
+            }
+        } else {
+            value1 = Double.parseDouble(input);
+        }
+        ACTION = operator;
+        input = "";
+        inputField.setText(String.valueOf(value1));
+    }
+}
