@@ -54,26 +54,51 @@ public class MainActivity extends AppCompatActivity {
         for (int id : operatorButtons) {
             findViewById(id).setOnClickListener(operatorListener);
         }
+
+        findViewById(R.id.btnClear).setOnClickListener(v -> {
+            input = "";
+            value1 = Double.NaN;
+            value2 = Double.NaN;
+            ACTION = '0';
+            inputField.setText("");
+        });
+
+        findViewById(R.id.btnBackspace).setOnClickListener(v -> {
+            if (input.length() > 0) {
+                input = input.substring(0, input.length() - 1);
+                inputField.setText(input);
+            }
+        });
     }
 
     private void handleOperator(char operator) {
         if (!Double.isNaN(value1)) {
-            value2 = Double.parseDouble(input);
-            switch (ACTION) {
-                case '+':
-                    value1 = value1 + value2;
-                    break;
-                case '-':
-                    value1 = value1 - value2;
-                    break;
-                case '*':
-                    value1 = value1 * value2;
-                    break;
-                case '/':
-                    value1 = value1 / value2;
-                    break;
-                case '=':
-                    break;
+            try {
+                value2 = Double.parseDouble(input);
+                switch (ACTION) {
+                    case '+':
+                        value1 = value1 + value2;
+                        break;
+                    case '-':
+                        value1 = value1 - value2;
+                        break;
+                    case '*':
+                        value1 = value1 * value2;
+                        break;
+                    case '/':
+                        if (value2 == 0) {
+                            throw new ArithmeticException("Cannot divide by zero");
+                        }
+                        value1 = value1 / value2;
+                        break;
+                    case '=':
+                        break;
+                }
+            } catch (ArithmeticException e) {
+                inputField.setText(e.getMessage());
+                value1 = Double.NaN;
+                input = "";
+                return;
             }
         } else {
             value1 = Double.parseDouble(input);
