@@ -72,39 +72,59 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleOperator(char operator) {
+    try {
         if (!Double.isNaN(value1)) {
-            try {
+            // If input is not empty, parse it to value2
+            if (!input.isEmpty()) {
                 value2 = Double.parseDouble(input);
-                switch (ACTION) {
-                    case '+':
-                        value1 = value1 + value2;
-                        break;
-                    case '-':
-                        value1 = value1 - value2;
-                        break;
-                    case '*':
-                        value1 = value1 * value2;
-                        break;
-                    case '/':
-                        if (value2 == 0) {
-                            throw new ArithmeticException("Cannot divide by zero");
-                        }
-                        value1 = value1 / value2;
-                        break;
-                    case '=':
-                        break;
-                }
-            } catch (ArithmeticException e) {
-                inputField.setText(e.getMessage());
-                value1 = Double.NaN;
-                input = "";
-                return;
+            }
+
+            // Perform the previous operation
+            switch (ACTION) {
+                case '+':
+                    value1 = value1 + value2;
+                    break;
+                case '-':
+                    value1 = value1 - value2;
+                    break;
+                case '*':
+                    value1 = value1 * value2;
+                    break;
+                case '/':
+                    if (value2 == 0) {
+                        throw new ArithmeticException("Cannot divide by zero");
+                    }
+                    value1 = value1 / value2;
+                    break;
+                case '=':
+                    // If '=' is pressed, just update value1 with value2
+                    value1 = value2;
+                    break;
             }
         } else {
-            value1 = Double.parseDouble(input);
+            // If value1 is NaN, initialize it with the current input
+            if (!input.isEmpty()) {
+                value1 = Double.parseDouble(input);
+            } else {
+                value1 = 0;
+            }
         }
-        ACTION = operator;
+    } catch (NumberFormatException e) {
+        inputField.setText("Invalid Input");
+        value1 = Double.NaN;
         input = "";
-        inputField.setText(String.valueOf(value1));
+        return;
+    } catch (ArithmeticException e) {
+        inputField.setText(e.getMessage());
+        value1 = Double.NaN;
+        input = "";
+        return;
     }
+
+    // Set the next action and clear the input
+    ACTION = operator;
+    input = "";
+    inputField.setText(String.valueOf(value1));
+}
+
 }
